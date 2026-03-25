@@ -31,11 +31,14 @@ class Admin implements ISettings {
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		/** @psalm-suppress DeprecatedMethod */
 		$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0');
+		/** @psalm-suppress DeprecatedMethod */
+		$accountType = $this->config->getAppValue(Application::APP_ID, 'account_type', 'personal');
 
 		$adminConfig = [
 			'client_id' => $clientID,
 			'client_secret' => $clientSecret !== '' ? 'dummySecret' : '',
 			'use_popup' => ($usePopup === '1'),
+			'account_type' => $accountType,
 		];
 		$this->initialStateService->provideInitialState('admin-config', $adminConfig);
 		return new TemplateResponse(Application::APP_ID, 'adminSettings');

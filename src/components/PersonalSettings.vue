@@ -291,11 +291,13 @@ export default {
 				'MailboxSettings.Read',
 				'offline_access',
 			]
-			const requestUrl = 'https://login.live.com/oauth20_authorize.srf'
+			const baseUrl = this.state.account_type === 'work'
+				? 'https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize'
+				: 'https://login.live.com/oauth20_authorize.srf'
+			const requestUrl = baseUrl
 				+ '?client_id=' + encodeURIComponent(this.state.client_id)
 				+ '&response_type=code'
 				+ '&redirect_uri=' + encodeURIComponent(this.redirect_uri)
-				// doc mentions onedrive.readwrite, i fought quite some time to find those working scopes
 				+ '&scope=' + encodeURIComponent(scopes.join(' '))
 
 			const req = {

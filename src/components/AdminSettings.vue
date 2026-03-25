@@ -60,6 +60,11 @@
 				@update:model-value="onUsePopupChanged">
 				{{ t('integration_onedrive', 'Use a popup to authenticate') }}
 			</NcFormBoxSwitch>
+			<NcFormBoxSwitch
+				v-model="useWorkAccount"
+				@update:model-value="onAccountTypeChanged">
+				{{ t('integration_onedrive', 'Use Microsoft 365 / Work account (instead of personal OneDrive)') }}
+			</NcFormBoxSwitch>
 		</div>
 	</div>
 </template>
@@ -102,6 +107,17 @@ export default {
 		}
 	},
 
+	computed: {
+		useWorkAccount: {
+			get() {
+				return this.state.account_type === 'work'
+			},
+			set(val) {
+				this.state.account_type = val ? 'work' : 'personal'
+			},
+		},
+	},
+
 	watch: {
 	},
 
@@ -109,6 +125,9 @@ export default {
 	},
 
 	methods: {
+		onAccountTypeChanged(newValue) {
+			this.saveOptions({ account_type: newValue ? 'work' : 'personal' })
+		},
 		onUsePopupChanged(newValue) {
 			this.saveOptions({ use_popup: newValue ? '1' : '0' })
 		},

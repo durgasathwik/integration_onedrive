@@ -197,7 +197,11 @@ class OnedriveAPIService {
 	 */
 	public function requestOAuthAccessToken(array $params = [], string $method = 'POST'): array {
 		try {
-			$url = 'https://login.live.com/oauth20_token.srf';
+			/** @psalm-suppress DeprecatedMethod */
+			$accountType = $this->config->getAppValue(Application::APP_ID, 'account_type', 'personal');
+			$url = $accountType === 'work'
+				? 'https://login.microsoftonline.com/organizations/oauth2/v2.0/token'
+				: 'https://login.live.com/oauth20_token.srf';
 			$options = [
 				'headers' => [
 					'User-Agent' => $this->userAgent,

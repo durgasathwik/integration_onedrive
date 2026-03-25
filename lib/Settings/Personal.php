@@ -41,6 +41,8 @@ class Personal implements ISettings {
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret') !== '';
 		/** @psalm-suppress DeprecatedMethod */
 		$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0');
+		/** @psalm-suppress DeprecatedMethod */
+		$accountType = $this->config->getAppValue(Application::APP_ID, 'account_type', 'personal');
 
 		// get free space
 		$userFolder = $this->root->getUserFolder($this->userId);
@@ -54,6 +56,7 @@ class Personal implements ISettings {
 			'client_id' => $clientID,
 			'client_secret' => $clientSecret,
 			'use_popup' => ($usePopup === '1'),
+			'account_type' => $accountType,
 			'navigation_enabled' => ($navigationEnabled === '1'),
 			'user_name' => $userName,
 			'free_space' => $freeSpace,
